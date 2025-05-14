@@ -1,0 +1,41 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@font-face {
+    font-family: "Geist";
+    src: url("./assets/geist-regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+/* TYPOGRAPHY STYLES */
+:root {
+    --font-family: "Geist", sans-serif;
+}
+span,
+p {
+    font-family: var(--font-family);
+}
+
+span {
+    @apply text-base;
+}
+.block-h1 span {
+    @apply text-2xl font-semibold;
+}
+
+.block-h2 span {
+    @apply text-xl font-semibold;
+}
+
+.block-h3 span {
+    @apply text-lg font-semibold;
+}
+
+.editor-block {
+    outline: none !important;
+    outline-width: 0 !important;
+    outline-style: none !important;
+    outline-color: transparent !important;
+    box-shadow: none !important;
+}
