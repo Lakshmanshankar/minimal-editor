@@ -1,6 +1,20 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+:root {
+    --text-base: 18px;
+    --text-lg: 24px;
+    --text-xl: 32px;
+    --text-2xl: 40px;
+    --text-color: #000;
+    --selection-color: rgba(200, 200, 200, 0.3);
+}
+
+.dark {
+    --text-color: #c5c5c5;
+    --selection-color: rgba(100, 100, 100, 0.4);
+}
+
 @font-face {
     font-family: "Geist";
     src: url("./assets/geist-regular.woff2") format("woff2");
@@ -8,28 +22,70 @@
     font-style: normal;
     font-display: swap;
 }
+
 /* TYPOGRAPHY STYLES */
 :root {
     --font-family: "Geist", sans-serif;
 }
-span,
-p {
-    font-family: var(--font-family);
+
+.editor-placeholder {
+    @apply text-gray-500 absolute top-0 left-0 -z-10;
 }
 
+span,
+em,
+strong,
+p,
+h1,
+h2,
+h3 {
+    font-family: var(--font-family);
+    color: var(--text-color);
+}
+
+.dark strong {
+    --text-color: #fff;
+}
+
+em,
+strong,
 span {
     @apply text-base;
 }
-.block-h1 span {
+
+.block-h1 span,
+.block-h1 strong {
     @apply text-2xl font-semibold;
 }
 
-.block-h2 span {
+.block-h2 span,
+.block-h2 strong {
     @apply text-xl font-semibold;
 }
 
-.block-h3 span {
+.block-h3 span,
+.block-h3 strong {
     @apply text-lg font-semibold;
+}
+
+.list-ul {
+    @apply list-disc ml-6 my-2 text-base;
+}
+
+.list-ol {
+    @apply list-decimal ml-6 my-2 text-base;
+}
+
+.list-item {
+    @apply mb-1 text-[var(--text-color)];
+}
+
+.nested-list-item {
+    @apply ml-4;
+}
+
+.horizontal-rule {
+    @apply my-6 border-t border-[var(--text-color)];
 }
 
 .editor-block {
@@ -38,4 +94,9 @@ span {
     outline-style: none !important;
     outline-color: transparent !important;
     box-shadow: none !important;
+}
+
+/* Add selection styling */
+::selection {
+    background-color: var(--selection-color);
 }

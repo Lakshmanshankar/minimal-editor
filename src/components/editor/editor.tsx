@@ -6,72 +6,57 @@ import { HorizontalRulePlugin } from "@lexical/react/LexicalHorizontalRulePlugin
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
-import { type EditorState } from "lexical";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useEffect, useState } from "react";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { Toolbar } from "./plugins/top-toolbar";
 import { theme } from "./theme";
-// import {ListItemNode, ListNode } from "@lexical/list";
-
+import { ListItemNode, ListNode } from "@lexical/list";
+import { ListPlugin } from '@lexical/react/LexicalListPlugin'
+import { CodeHighlightNode, CodeNode } from '@lexical/code'
+import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode'
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
+import { ORDERED_LIST, UNORDERED_LIST, HEADING, TEXT_FORMAT_TRANSFORMERS, type Transformer } from '@lexical/markdown';
+const MD_TRANSFORMERS = [ORDERED_LIST, UNORDERED_LIST, HEADING, TEXT_FORMAT_TRANSFORMERS] as Transformer[]
+  
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onError(error: any) {
-    console.error(error);
-}
-
-function MyOnChangePlugin({
-    onChange,
-}: {
-    onChange: (editorState: EditorState) => void;
-}) {
-    const [editor] = useLexicalComposerContext();
-    useEffect(() => {
-        return editor.registerUpdateListener(({ editorState }) => {
-            onChange(editorState);
-        });
-    }, [editor, onChange]);
-    return null;
+  console.error(error);
 }
 
 export function Editor() {
-    const initialConfig = {
-        namespace: "MyEditor",
-        theme,
-        onError,
-        nodes: [HeadingNode, QuoteNode],
-    };
 
-    const [, setEditorState] = useState<EditorState>();
-    function onChange(editorState: EditorState) {
-        setEditorState(editorState);
-    }
+  const initialConfig = {
+    namespace: "MyEditor",
+    theme,
+    onError,
+    nodes: [HeadingNode, QuoteNode, ListItemNode, ListNode, CodeHighlightNode, CodeNode, HorizontalRuleNode],
+  };
 
-    return (
-        <div>
+  return (
+    <div>
       <LexicalComposer initialConfig={initialConfig}>
-        <Toolbar />
-        <RichTextPlugin
-          contentEditable={
-            <ContentEditable
-              className="editor-block"
-              aria-placeholder="Type something"
-              placeholder={<></>}
+        <div className="editor-container">
+          <Toolbar />
+          <div className="relative">
+            <RichTextPlugin
+              contentEditable={
+                <ContentEditable
+                  className="editor-block"
+                  aria-placeholder="Type something"
+                  placeholder={<div className="editor-placeholder">Type text or press / for commands</div>}
+                />
+              }
+              ErrorBoundary={LexicalErrorBoundary}
             />
-          }
-          placeholder={
-            <div className="placeholder">
-              Type something
-            </div>
-          }
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        <HistoryPlugin />
-        <AutoFocusPlugin />
-        <CheckListPlugin />
-        <HorizontalRulePlugin />
-        <MyOnChangePlugin onChange={onChange} />
+          </div>
+          <HistoryPlugin />
+          <AutoFocusPlugin />
+          <CheckListPlugin />
+          <HorizontalRulePlugin />
+          <ListPlugin />
+          <MarkdownShortcutPlugin transformers={MD_TRANSFORMERS} />
+        </div>
       </LexicalComposer>
 
     </div>
-    );
+  );
 }
