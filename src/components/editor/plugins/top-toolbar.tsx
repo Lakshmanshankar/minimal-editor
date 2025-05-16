@@ -1,9 +1,4 @@
-import {
-    $getSelection,
-    $isRangeSelection,
-    FORMAT_TEXT_COMMAND,
-    COMMAND_PRIORITY_CRITICAL,
-} from 'lexical';
+import { $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND, COMMAND_PRIORITY_CRITICAL } from 'lexical';
 import { useEffect, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
@@ -26,13 +21,11 @@ export function Toolbar() {
 
     useEffect(() => {
         if (!editor) return;
-        const unregisterSelectionListener = editor.registerUpdateListener(
-            ({ editorState }) => {
-                editorState.read(() => {
-                    $updateToolbar();
-                });
-            }
-        );
+        const unregisterSelectionListener = editor.registerUpdateListener(({ editorState }) => {
+            editorState.read(() => {
+                $updateToolbar();
+            });
+        });
 
         const unregisterFormat = editor.registerCommand(
             FORMAT_TEXT_COMMAND,
