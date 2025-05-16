@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 :root {
     --text-base: 18px;
@@ -8,16 +8,18 @@
     --text-2xl: 40px;
     --text-color: #000;
     --selection-color: rgba(200, 200, 200, 0.3);
+    --link-color: #0072f5;
 }
 
 .dark {
     --text-color: #c5c5c5;
+    --link-color: #68b5fb;
     --selection-color: rgba(100, 100, 100, 0.4);
 }
 
 @font-face {
-    font-family: "Geist";
-    src: url("./assets/geist-regular.woff2") format("woff2");
+    font-family: 'Geist';
+    src: url('./assets/geist-regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -25,11 +27,21 @@
 
 /* TYPOGRAPHY STYLES */
 :root {
-    --font-family: "Geist", sans-serif;
+    --font-family: 'Geist', sans-serif;
 }
 
 .editor-placeholder {
     @apply text-gray-500 absolute top-0 left-0 -z-10;
+}
+
+p {
+    @apply mb-3;
+}
+
+h1,
+h2,
+h3 {
+    @apply mb-3;
 }
 
 span,
@@ -84,8 +96,54 @@ span {
     @apply ml-4;
 }
 
+.list-ul .list-ul,
+.list-ol .list-ol,
+.list-ul .list-ol,
+.list-ol .list-ul {
+    @apply my-1 ml-4;
+    counter-reset: item;
+}
+
+.list-ul {
+    @apply list-disc;
+}
+
+.list-ol {
+    @apply list-decimal;
+    counter-reset: item;
+}
+
+.list-ul .nested-list-item {
+    @apply list-[circle];
+}
+
+.list-ol .nested-list-item,
+.list-ol .nested-list-item .list-ol .nested-list-item,
+.list-ul .nested-list-item,
+.list-ul .nested-list-item .list-ul .nested-list-item {
+    @apply list-none;
+}
+.list-ol .nested-list-item .list-ol {
+    @apply list-[upper-alpha];
+}
+.list-ol .nested-list-item .list-ol .nested-list-item .list-ol {
+    @apply list-[lower-alpha];
+}
+
+.list-item .list-item:last-child {
+    @apply mb-0;
+}
+
 .horizontal-rule {
     @apply my-6 border-t border-[var(--text-color)];
+}
+
+.text-link span {
+    @apply text-[var(--link-color)] underline;
+}
+
+.block-quote {
+    @apply border-l-2 border-gray-300 pl-4 py-2 text-gray-500 italic;
 }
 
 .editor-block {

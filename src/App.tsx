@@ -1,4 +1,4 @@
-import { PageSetting } from "./components/editor/page-setting";
+import { PageSetting } from './components/editor/page-setting';
 
 function App() {
     return (
