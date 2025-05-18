@@ -1,54 +1,56 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📝 No BS Editor,
 
-Currently, two official plugins are available:
+A minimalist, local-first, keyboard-friendly notes editor — built for devs who just want to write and move on.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- No Login,
+- No Distractions
+- Just type and go.
+- Sync with indexdb.
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- ✨ **Rich text editor** using [Lexical](https://lexical.dev/)
+- 💾 **Local file storage** via IndexedDB
+- 🔁 **Auto-load from URL** (shareable `?file=id`)
+- 🗂️ **Multiple files**, autosorted by save time
+- 🧼 Clean UI, zero boilerplate, zero distractions
+- Currently support basic markdown
+- Link editor, images and tables comming soon.
 
-```js
-export default tseslint.config({
-    extends: [
-        // Remove ...tseslint.configs.recommended and replace with this
-        ...tseslint.configs.recommendedTypeChecked,
-        // Alternatively, use this for stricter rules
-        ...tseslint.configs.strictTypeChecked,
-        // Optionally, add this for stylistic rules
-        ...tseslint.configs.stylisticTypeChecked,
-    ],
-    languageOptions: {
-        // other options...
-        parserOptions: {
-            project: ['./tsconfig.node.json', './tsconfig.app.json'],
-            tsconfigRootDir: import.meta.dirname,
-        },
-    },
-});
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 📦 Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+- [React](https://reactjs.org)
+- [Lexical](https://lexical.dev) – editor framework by Meta
+- [Tailwind CSS](https://tailwindcss.com) – styling
 
-export default tseslint.config({
-    plugins: {
-        // Add the react-x and react-dom plugins
-        'react-x': reactX,
-        'react-dom': reactDom,
-    },
-    rules: {
-        // other rules...
-        // Enable its recommended typescript rules
-        ...reactX.configs['recommended-typescript'].rules,
-        ...reactDom.configs.recommended.rules,
-    },
-});
+
+
+## 🛠️ Usage
+
+1. Open the app
+2. Start typing
+4. Editor auto-generates a file, stores it locally, and updates the URL
+5. Visit `/editor?file=12345678` to reopen any file
+
+
+
+## 🚧 Future Enhancements
+
+- 📝 Rename files
+- 🔥 Autosave with debounce
+- 🗑️ Delete notes
+- 🔐 Cloud sync (optional, opt-in)
+
+
+
+## 🧪 Dev Setup
+
+```bash
+git clone https://github.com/lakshmanshankar/minimal-editor
+cd minimal-editor
+pnpm install
+pnpm dev
 ```
