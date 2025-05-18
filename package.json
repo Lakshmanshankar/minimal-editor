@@ -1,5 +1,5 @@
 {
-    "name": "lexical-cms",
+    "name": "minmal-editor",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -20,6 +20,7 @@
         "@lexical/selection": "^0.31.1",
         "@lexical/text": "^0.31.1",
         "@lexical/utils": "^0.31.1",
+        "@radix-ui/react-dialog": "^1.1.13",
         "@radix-ui/react-dropdown-menu": "^2.1.14",
         "@radix-ui/react-slot": "^1.2.2",
         "@radix-ui/react-toggle": "^1.1.8",

@@ -13,7 +13,6 @@ import { AutoLinkPlugin } from '@lexical/react/LexicalAutoLinkPlugin';
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
 
 import { MATCHERS } from './plugins/auto-link-plugin';
-import { Toolbar } from './plugins/top-toolbar';
 import { MD_TRANSFORMERS } from './plugins/markdown-plugin';
 import { LexicalNodes } from './nodes';
 import { theme } from './theme';
@@ -32,35 +31,35 @@ export function Editor() {
     };
 
     return (
-        <div>
-            <LexicalComposer initialConfig={initialConfig}>
-                <div className="editor-container">
-                    <Toolbar />
-                    <div className="relative">
-                        <RichTextPlugin
-                            contentEditable={
-                                <ContentEditable
-                                    className="editor-block"
-                                    aria-placeholder="Type something"
-                                    placeholder={
-                                        <div className="editor-placeholder">Type text or press / for commands</div>
-                                    }
-                                />
-                            }
-                            ErrorBoundary={LexicalErrorBoundary}
-                        />
+        <div className="my-10 mt-20">
+            <div>
+                <LexicalComposer initialConfig={initialConfig}>
+                    <div className="editor-container">
+                        <div className="relative">
+                            <RichTextPlugin
+                                contentEditable={
+                                    <ContentEditable
+                                        className="editor-block"
+                                        spellCheck={false}
+                                        aria-placeholder="Type something"
+                                        placeholder={<div className="editor-placeholder">Just start typing</div>}
+                                    />
+                                }
+                                ErrorBoundary={LexicalErrorBoundary}
+                            />
+                        </div>
+                        <HistoryPlugin />
+                        <AutoFocusPlugin />
+                        <HorizontalRulePlugin />
+                        <ListPlugin hasStrictIndent={true} />
+                        <LinkPlugin />
+                        <CheckListPlugin />
+                        <AutoLinkPlugin matchers={MATCHERS} />
+                        <TabIndentationPlugin />
+                        <MarkdownShortcutPlugin transformers={MD_TRANSFORMERS} />
                     </div>
-                    <HistoryPlugin />
-                    <AutoFocusPlugin />
-                    <HorizontalRulePlugin />
-                    <ListPlugin hasStrictIndent={true} />
-                    <LinkPlugin />
-                    <CheckListPlugin />
-                    <AutoLinkPlugin matchers={MATCHERS} />
-                    <TabIndentationPlugin />
-                    <MarkdownShortcutPlugin transformers={MD_TRANSFORMERS} />
-                </div>
-            </LexicalComposer>
+                </LexicalComposer>
+            </div>
         </div>
     );
 }

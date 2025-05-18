@@ -13,7 +13,7 @@ export function PageSetting({ isFullWidth }: PageSettingProps) {
         );
     }
     return (
-        <div className="w-full max-w-screen-lg mx-auto">
+        <div className="w-full max-w-screen-md mx-auto">
             <Editor />
         </div>
     );
