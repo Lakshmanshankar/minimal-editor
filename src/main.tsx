@@ -5,8 +5,8 @@ import './typography.css';
 import App from './App.tsx';
 
 import { ThemeProvider } from '@/provider/theme.tsx';
-import { TopNavbar } from './components/core/top-navbar.tsx';
-import { AppFooter } from './components/core/footer.tsx';
+import { TopNavbar } from '@/components/core/top-navbar.tsx';
+import { AppFooter } from '@/components/core/footer.tsx';
 
 export default App;
 

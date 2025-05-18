@@ -12,6 +12,7 @@ import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { AutoLinkPlugin } from '@lexical/react/LexicalAutoLinkPlugin';
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
 
+import { SaveToIdbPlugin } from '@/components/editor/plugins/save-to-idb';
 import { MATCHERS } from './plugins/auto-link-plugin';
 import { MD_TRANSFORMERS } from './plugins/markdown-plugin';
 import { LexicalNodes } from './nodes';
@@ -34,6 +35,7 @@ export function Editor() {
         <div className="my-10 mt-20">
             <div>
                 <LexicalComposer initialConfig={initialConfig}>
+                    <SaveToIdbPlugin />
                     <div className="editor-container">
                         <div className="relative">
                             <RichTextPlugin

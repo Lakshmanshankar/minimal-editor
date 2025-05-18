@@ -35,8 +35,6 @@ export const HR: ElementTransformer = {
     },
     type: 'element',
 };
-  
-
 export const MD_TRANSFORMERS = [
     ORDERED_LIST,
     UNORDERED_LIST,
