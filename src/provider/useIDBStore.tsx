@@ -4,7 +4,11 @@ import { useCallback, useEffect, useState } from 'react';
 const DB_NAME = 'no-bs-store';
 const STORE_NAME = 'files';
 
-type KV = Record<string, string>;
+type File = {
+    name: string;
+    content: string;
+};
+type KV = Record<string, File>;
 
 export function useIDBStore() {
     const [files, setFiles] = useState<KV>({});
@@ -19,10 +23,19 @@ export function useIDBStore() {
         });
     };
 
-    const addFile = async (key: number, content: string) => {
+    const setFile = async (key: number, content: string) => {
         const db = await getDB();
-        await db.put(STORE_NAME, content, key);
-        return key;
+        let fname = await getFileName(key);
+        if (!fname) {
+            fname = 'Untitled';
+        }
+        const data: File = {
+            content,
+            name: fname || 'Untitled',
+        };
+        await db.put(STORE_NAME, data, key);
+        loadFiles();
+        return;
     };
 
     const getFile = async (key: number) => {
@@ -30,9 +43,31 @@ export function useIDBStore() {
         return db.get(STORE_NAME, key);
     };
 
-    const updateFile = async (key: number, newContent: string) => {
+    const removeFile = async (key: number) => {
         const db = await getDB();
-        await db.put(STORE_NAME, newContent, key);
+        await db.delete(STORE_NAME, key);
+        await loadFiles();
+    };
+
+    const getFileName = async (key: number) => {
+        const file = await getFile(key);
+        if (!file) {
+            return;
+        }
+        return file.name;
+    };
+
+    const updateFileName = async (key: number, newName: string) => {
+        const db = await getDB();
+        const file = await getFile(key);
+        if (!file) {
+            return;
+        }
+        const data: File = {
+            name: newName,
+            content: file.content,
+        };
+        await db.put(STORE_NAME, data, key);
         await loadFiles();
     };
 
@@ -43,13 +78,11 @@ export function useIDBStore() {
         const all: KV = {};
 
         let cursor = await store.openCursor();
-        while (cursor) {
-            console.log(cursor.key, cursor.value);
+        while (cursor && cursor.value) {
             const cursorKey = cursor.key.toString();
             all[cursorKey] = cursor.value;
             cursor = await cursor.continue();
         }
-
         setFiles(all);
     }, []);
 
@@ -57,5 +90,5 @@ export function useIDBStore() {
         loadFiles();
     }, [loadFiles]);
 
-    return { files, addFile, updateFile, getFile, reload: loadFiles };
+    return { files, setFile, getFile, reload: loadFiles, updateFileName, removeFile };
 }

@@ -54,16 +54,15 @@ p,
 h1,
 h2,
 h3 {
+    --text-color: #000;
     font-family: var(--font-family);
     color: var(--text-color);
 }
 
-.dark strong {
+.dark strong,.dark h1,.dark h2,.dark h3,.dark span,.dark em,.dark a {
     --text-color: #fff;
 }
 
-hr {
-}
 em,
 strong,
 span {
