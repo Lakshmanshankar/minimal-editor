@@ -1,4 +1,4 @@
-import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+// import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
@@ -17,6 +17,7 @@ import { MATCHERS } from './plugins/auto-link-plugin';
 import { MD_TRANSFORMERS } from './plugins/markdown-plugin';
 import { LexicalNodes } from './nodes';
 import { theme } from './theme';
+import { LinkEditorPlugin } from './plugins/link-editor-plugin';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onError(error: any) {
@@ -36,6 +37,7 @@ export function Editor() {
             <div>
                 <LexicalComposer initialConfig={initialConfig}>
                     <SaveToIdbPlugin />
+                    <LinkEditorPlugin />
                     <div className="editor-container">
                         <div className="relative">
                             <RichTextPlugin
@@ -51,7 +53,7 @@ export function Editor() {
                             />
                         </div>
                         <HistoryPlugin />
-                        <AutoFocusPlugin />
+                        {/* <AutoFocusPlugin /> */}
                         <HorizontalRulePlugin />
                         <ListPlugin hasStrictIndent={true} />
                         <LinkPlugin />

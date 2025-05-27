@@ -18,7 +18,6 @@ export function SaveToIdbPlugin() {
 
     const saveToIdb = async () => {
         const content = JSON.stringify(editor.getEditorState().toJSON());
-        console.log(editor.getEditorState().toJSON(),'DKDLDl')
         const key = getFileKeyFromURL() || Date.now();
         if (key) {
             setFile(key, content);
@@ -29,6 +28,7 @@ export function SaveToIdbPlugin() {
 
     const loadFile = async (key: number) => {
         let content = await getFile(key);
+        console.log(content,"CONNTE")
         if (!content) return;
         if (content.content) {
             content = content.content;
