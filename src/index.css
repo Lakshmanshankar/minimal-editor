@@ -125,11 +125,24 @@
     * {
         @apply border-border outline-ring/50;
     }
+
     body {
         @apply bg-background text-foreground;
     }
 }
 
 body {
-    overflow-y: scroll; /* forces scrollbar even if not needed */
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+input,
+textarea,
+*[contenteditable="true"] {
+    caret-color: var(--primary) !important;
+}
+
+.dark input,
+.dark textarea,
+.dark [contenteditable="true"] {
+    caret-color: white !important;
 }

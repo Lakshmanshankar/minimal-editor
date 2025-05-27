@@ -59,7 +59,13 @@ h3 {
     color: var(--text-color);
 }
 
-.dark strong,.dark h1,.dark h2,.dark h3,.dark span,.dark em,.dark a {
+.dark strong,
+.dark h1,
+.dark h2,
+.dark h3,
+.dark span,
+.dark em,
+.dark a {
     --text-color: #fff;
 }
 
@@ -127,9 +133,11 @@ span {
 .list-ul .nested-list-item .list-ul .nested-list-item {
     @apply list-none;
 }
+
 .list-ol .nested-list-item .list-ol {
     @apply list-[upper-alpha];
 }
+
 .list-ol .nested-list-item .list-ol .nested-list-item .list-ol {
     @apply list-[lower-alpha];
 }
@@ -137,6 +145,28 @@ span {
 .list-item .list-item:last-child {
     @apply mb-0;
 }
+
+
+.list-ul:has(.list-item[role="checkbox"]) {
+    margin-left: 2px;
+}
+.list-item[role="checkbox"] {
+    @apply flex items-center p-0 m-0 cursor-pointer ring-0 focus:ring-0 outline-none focus:outline-none;
+}
+
+.list-item[aria-checked="true"] {
+    @apply text-blue-900;
+}
+
+.list-item[role="checkbox"]::before {
+    @apply content-[''] w-5 h-5 border-2 mr-2 rounded-sm border-gray-300 pr-0 flex-shrink-0;
+}
+
+.list-item[aria-checked="true"]::before {
+    @apply bg-blue-500 border-blue-500;
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m13.854 3.646-7.5 7.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6 10.293l7.146-7.147a.5.5 0 0 1 .708.708z'/%3e%3c/svg%3e");
+}
+
 
 .horizontal-rule {
     @apply my-6 border-t border-[var(--hr-gray)];
@@ -147,7 +177,7 @@ span {
 }
 
 .block-quote {
-    @apply border-l-2 border-gray-300 pl-4 py-2 text-gray-500 italic;
+    @apply border-l-3 border-gray-300 pl-4 py-2 text-gray-500;
 }
 
 .editor-block {
