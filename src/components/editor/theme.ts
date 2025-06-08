@@ -23,5 +23,13 @@ export const theme = {
     text: {
         link: 'text-link',
         underline: 'underline',
+        code: 'inline-code',
+        codeHighlight: 'code-highlight',
+        bold: 'font-bold',
+        italic: 'italic',
+        strikethrough: 'line-through',
+        subscript: 'subscript',
+        superscript: 'superscript',
+        highlight: 'highlight',
     },
 };

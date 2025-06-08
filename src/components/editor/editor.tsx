@@ -1,4 +1,4 @@
-// import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
@@ -53,7 +53,7 @@ export function Editor() {
                             />
                         </div>
                         <HistoryPlugin />
-                        {/* <AutoFocusPlugin /> */}
+                        <AutoFocusPlugin />
                         <HorizontalRulePlugin />
                         <ListPlugin hasStrictIndent={true} />
                         <LinkPlugin />

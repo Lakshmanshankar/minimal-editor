@@ -1,6 +1,7 @@
 import { $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND, COMMAND_PRIORITY_CRITICAL } from 'lexical';
 import { useEffect, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { LinkEditorPlugin } from './link-editor-plugin';
 
 export function Toolbar() {
     const [editor] = useLexicalComposerContext();
@@ -66,6 +67,7 @@ export function Toolbar() {
             >
                 U
             </button>
+            <LinkEditorPlugin />
         </div>
     );
 }

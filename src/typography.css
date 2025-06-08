@@ -7,15 +7,20 @@
     --text-xl: 32px;
     --text-2xl: 40px;
     --text-color: #000;
-    --selection-color: rgba(200, 200, 200, 0.3);
+    --selection-color: #c0e5f4;
+    --selection-text-color: #000;
     --link-color: #0072f5;
     --hr-gray: #e0e0e0;
+
+    --text-base--line-height: calc(1.35 / 1);
+
 }
 
 .dark {
-    --text-color: #c5c5c5;
+    --text-color: #d4d4d4;
     --link-color: #68b5fb;
-    --selection-color: rgba(100, 100, 100, 0.4);
+    --selection-color: #073ba5;
+    --selection-text-color:#fff;
     --hr-gray: #2e2e2e;
 }
 
@@ -37,7 +42,7 @@
 }
 
 p {
-    @apply mb-3;
+    @apply mb-3 tracking-tight;
 }
 
 h1,
@@ -54,25 +59,30 @@ p,
 h1,
 h2,
 h3 {
-    --text-color: #000;
     font-family: var(--font-family);
     color: var(--text-color);
+    font-size: var(--text-base);
 }
 
-.dark strong,
-.dark h1,
-.dark h2,
-.dark h3,
-.dark span,
+.inline-code {
+    @apply bg-gray-300/80 px-1 rounded-md;
+}
+
+.code-highlight {
+    @apply bg-gray-100 px-1 py-0.5 rounded-md;
+}
+
+li{
+    @apply my-2;
+}
+
 .dark em,
-.dark a {
+.dark strong {
     --text-color: #fff;
 }
 
-em,
-strong,
-span {
-    @apply text-base;
+.dark span {
+    @apply text-base tracking-tight;
 }
 
 .block-h1 span,
@@ -180,6 +190,7 @@ span {
     @apply border-l-3 border-gray-300 pl-4 py-2 text-gray-500;
 }
 
+
 .editor-block {
     outline: none !important;
     outline-width: 0 !important;
@@ -191,4 +202,5 @@ span {
 /* Add selection styling */
 ::selection {
     background-color: var(--selection-color);
+    color: var(--selection-text-color);
 }
