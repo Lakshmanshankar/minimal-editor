@@ -19,6 +19,7 @@ import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
+import { SlashMenuPlugin } from './plugins/slash-menu-plugin';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onError(error: any) {
@@ -63,6 +64,7 @@ export function Editor() {
                         <ListPlugin />
                         <HorizontalRulePlugin />
                         <CheckListPlugin />
+                        <SlashMenuPlugin />
                     </div>
                 </LexicalComposer>
             </div>

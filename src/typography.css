@@ -25,18 +25,16 @@
 }
 
 @font-face {
-    font-family: 'Geist';
-    src: url('./assets/geist-regular.woff2') format('woff2');
-    font-weight: 400;
+    font-family: 'Inter';
+    src: url('./assets/inter-var.ttf') format('truetype');
+    font-weight: 100 900;
     font-style: normal;
     font-display: swap;
 }
 
-/* TYPOGRAPHY STYLES */
-:root {
-    --font-family: 'Geist', sans-serif;
+:root{
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 }
-
 .editor-placeholder {
     @apply text-gray-500 absolute top-0 left-0 -z-10;
 }
@@ -62,6 +60,11 @@ h3 {
     font-family: var(--font-family);
     color: var(--text-color);
     font-size: var(--text-base);
+    font-weight: 400;
+}
+
+.font-bold {
+    font-weight: 500;
 }
 
 .inline-code {
@@ -204,4 +207,8 @@ li{
 ::selection {
     background-color: var(--selection-color);
     color: var(--selection-text-color);
+}
+
+.text-size-small > span{
+    font-size: 15px !important;
 }
