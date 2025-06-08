@@ -65,7 +65,7 @@ h3 {
 }
 
 .inline-code {
-    @apply bg-gray-300/80 px-1 rounded-md;
+    @apply bg-gray-300/50 px-1 rounded-md;
 }
 
 .code-highlight {
@@ -101,7 +101,7 @@ li{
 }
 
 .list-ul {
-    @apply list-disc ml-6 my-2 text-base;
+    @apply list-disc ml-6 my-2 text-lg;
 }
 
 .list-ol {
@@ -110,6 +110,7 @@ li{
 
 .list-item {
     @apply mb-1 text-[var(--text-color)];
+    font-size: var(--text-base);
 }
 
 .nested-list-item {

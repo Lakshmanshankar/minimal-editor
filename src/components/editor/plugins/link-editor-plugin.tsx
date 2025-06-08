@@ -2,17 +2,16 @@ import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_NORMAL, $createTextN
 import { createCommand } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useCallback, useEffect, useState } from 'react';
-import { $createLinkNode, $isLinkNode, LinkNode, $toggleLink} from '@lexical/link';
+import { $createLinkNode, $isLinkNode, LinkNode, $toggleLink } from '@lexical/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Link } from 'lucide-react';
 import {
-    Dialog,
-    DialogContent,
-    DialogTrigger,
-    DialogFooter
-} from "@/components/ui/dialog";
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 
 export function LinkEditorPlugin() {
     const [editor] = useLexicalComposerContext();
@@ -29,10 +28,9 @@ export function LinkEditorPlugin() {
                 setIsEditing(false);
                 return;
             }
+
             const nodes = selection.getNodes();
-            // First try to find if we're directly in a link node
             let linkNode = nodes.find((node): node is LinkNode => $isLinkNode(node));
-            // If not, check if any of the nodes have a link parent
             if (!linkNode) {
                 const nodeWithLinkParent = nodes.find(node => {
                     const parent = node.getParent();
@@ -95,8 +93,8 @@ export function LinkEditorPlugin() {
     }, [editor]);
 
     return (
-        <Dialog open={isEditing} onOpenChange={setIsEditing}>
-            <DialogTrigger asChild>
+        <Popover open={isEditing} onOpenChange={setIsEditing}>
+            <PopoverTrigger asChild>
                 <Button
                     variant="ghost"
                     size="sm"
@@ -105,27 +103,26 @@ export function LinkEditorPlugin() {
                 >
                     <Link className="h-4 w-4" />
                 </Button>
-            </DialogTrigger>
-            <DialogContent>
-                <div className="space-y-2">
-                    <Label htmlFor="link-url">URL</Label>
+            </PopoverTrigger>
+            <PopoverContent align="start" className="w-auto p-2 border border-accent rounded-lg" sideOffset={10}>
+                <div className="flex items-center gap-2">
+                    <Label htmlFor="link-url" className="sr-only">URL</Label>
                     <Input
                         id="link-url"
                         value={linkUrl}
                         onChange={(e) => setLinkUrl(e.target.value)}
-                        placeholder="Enter URL"
+                        placeholder="https://example.com"
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 handleLinkCreation();
                             }
                         }}
+                        className="h-8"
                     />
+                    <Button onClick={handleLinkCreation} size="sm" className="h-8">Save</Button>
                 </div>
-                <DialogFooter>
-                    <Button onClick={handleLinkCreation}>Save</Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+            </PopoverContent>
+        </Popover>
     );
 }

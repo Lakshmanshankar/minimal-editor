@@ -19,7 +19,7 @@ export const theme = {
         },
     },
     hr: 'horizontal-rule',
-
+    code: 'inline-code',
     text: {
         link: 'text-link',
         underline: 'underline',

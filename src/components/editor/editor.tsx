@@ -1,14 +1,10 @@
-import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+// import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
-import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
-import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
-import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
-import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { AutoLinkPlugin } from '@lexical/react/LexicalAutoLinkPlugin';
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
 
@@ -17,7 +13,12 @@ import { MATCHERS } from './plugins/auto-link-plugin';
 import { MD_TRANSFORMERS } from './plugins/markdown-plugin';
 import { LexicalNodes } from './nodes';
 import { theme } from './theme';
-import { LinkEditorPlugin } from './plugins/link-editor-plugin';
+import { Toolbar } from './plugins/top-toolbar';
+import { ListBreakOutPlugin } from './plugins/list-break-out-plugin';
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onError(error: any) {
@@ -37,7 +38,7 @@ export function Editor() {
             <div>
                 <LexicalComposer initialConfig={initialConfig}>
                     <SaveToIdbPlugin />
-                    <LinkEditorPlugin />
+                    <Toolbar />
                     <div className="editor-container">
                         <div className="relative">
                             <RichTextPlugin
@@ -53,14 +54,15 @@ export function Editor() {
                             />
                         </div>
                         <HistoryPlugin />
-                        <AutoFocusPlugin />
-                        <HorizontalRulePlugin />
-                        <ListPlugin hasStrictIndent={true} />
-                        <LinkPlugin />
-                        <CheckListPlugin />
+                        {/* <AutoFocusPlugin /> */}
                         <AutoLinkPlugin matchers={MATCHERS} />
                         <TabIndentationPlugin />
                         <MarkdownShortcutPlugin transformers={MD_TRANSFORMERS} />
+                        <ListBreakOutPlugin />
+                        <LinkPlugin />
+                        <ListPlugin />
+                        <HorizontalRulePlugin />
+                        <CheckListPlugin />
                     </div>
                 </LexicalComposer>
             </div>
