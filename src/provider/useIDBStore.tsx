@@ -90,5 +90,12 @@ export function useIDBStore() {
         loadFiles();
     }, [loadFiles]);
 
-    return { files, setFile, getFile, reload: loadFiles, updateFileName, removeFile };
+    return {
+        files,
+        setFile,
+        getFile,
+        reload: loadFiles,
+        updateFileName,
+        removeFile,
+    };
 }

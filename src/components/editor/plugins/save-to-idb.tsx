@@ -1,10 +1,22 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useIDBStore } from '@/provider/useIDBStore';
 import { Button } from '@/components/ui/button';
-import { cn, getFileKeyFromURL, setFileKeyInURL, resetFileKeyInURL } from '@/lib/utils';
+import {
+    cn,
+    getFileKeyFromURL,
+    setFileKeyInURL,
+    resetFileKeyInURL,
+} from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Dialog, DialogTrigger, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { Pencil } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -12,7 +24,8 @@ import { DEFAULT_ROOT } from './default-editor';
 
 export function SaveToIdbPlugin() {
     const [editor] = useLexicalComposerContext();
-    const { files, setFile, getFile, reload, updateFileName, removeFile } = useIDBStore();
+    const { files, setFile, getFile, reload, updateFileName, removeFile } =
+        useIDBStore();
     const [currentFile, setCurrentFile] = useState<number | null>(null);
     const [currentFileName, setCurrentFileName] = useState<string>('');
 
@@ -28,7 +41,7 @@ export function SaveToIdbPlugin() {
 
     const loadFile = async (key: number) => {
         let content = await getFile(key);
-        console.log(content,"CONNTE")
+        console.log(content, 'CONNTE');
         if (!content) return;
         if (content.content) {
             content = content.content;
@@ -57,7 +70,7 @@ export function SaveToIdbPlugin() {
     }, []);
 
     return (
-        <div className='shadow-md'>
+        <div className="shadow-md">
             <Button onClick={saveToIdb} className="fixed top-2.5 right-12">
                 Save to Local
             </Button>
@@ -79,7 +92,8 @@ export function SaveToIdbPlugin() {
                                 key={key}
                                 className={cn(
                                     `w-[200px] flex items-center justify-between rounded-md p-1 hover:bg-accent group cursor-pointer`,
-                                    key === currentFile?.toString() && 'bg-accent/80'
+                                    key === currentFile?.toString() &&
+                                        'bg-accent/80'
                                 )}
                                 onClick={() => loadFile(parseInt(key))}
                             >
@@ -92,27 +106,41 @@ export function SaveToIdbPlugin() {
                                         className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 mr-2"
                                         onClick={e => {
                                             e.stopPropagation();
-                                            setCurrentFileName(files[key]?.name);
+                                            setCurrentFileName(
+                                                files[key]?.name
+                                            );
                                         }}
                                     >
                                         <Pencil className="h-3.5 w-3.5" />
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-[400px] gap-0 border-none rounded-md">
                                         <DialogHeader>
-                                            <DialogTitle className="text-md">Edit File</DialogTitle>
+                                            <DialogTitle className="text-md">
+                                                Edit File
+                                            </DialogTitle>
                                         </DialogHeader>
                                         <div className="flex flex-col gap-4 py-3">
                                             <div className="space-y-2">
-                                                <Label htmlFor="fileName" className="font-normal">
+                                                <Label
+                                                    htmlFor="fileName"
+                                                    className="font-normal"
+                                                >
                                                     File Name
                                                 </Label>
                                                 <Input
                                                     id="fileName"
                                                     value={currentFileName}
-                                                    onChange={e => setCurrentFileName(e.target.value)}
+                                                    onChange={e =>
+                                                        setCurrentFileName(
+                                                            e.target.value
+                                                        )
+                                                    }
                                                     onKeyDown={e => {
                                                         if (e.key === 'Enter') {
-                                                            updateFileName(parseInt(key), currentFileName);
+                                                            updateFileName(
+                                                                parseInt(key),
+                                                                currentFileName
+                                                            );
                                                         }
                                                     }}
                                                 />
@@ -129,7 +157,10 @@ export function SaveToIdbPlugin() {
                                             </Button>
                                             <Button
                                                 onClick={() => {
-                                                    updateFileName(parseInt(key), currentFileName);
+                                                    updateFileName(
+                                                        parseInt(key),
+                                                        currentFileName
+                                                    );
                                                 }}
                                             >
                                                 Update

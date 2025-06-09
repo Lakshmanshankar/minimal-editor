@@ -20,6 +20,7 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { SlashMenuPlugin } from './plugins/slash-menu-plugin';
+import { defaultColorSystem } from './custom-nodes/color-system';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onError(error: any) {
@@ -33,6 +34,9 @@ export function Editor() {
         onError,
         nodes: LexicalNodes,
     };
+
+    const dd = defaultColorSystem.generateCSSClasses();
+    console.log(dd);
 
     return (
         <div className="my-10 mt-20">
@@ -48,7 +52,11 @@ export function Editor() {
                                         className="editor-block"
                                         spellCheck={false}
                                         aria-placeholder="Type something"
-                                        placeholder={<div className="editor-placeholder">Just start typing</div>}
+                                        placeholder={
+                                            <div className="editor-placeholder">
+                                                Just start typing
+                                            </div>
+                                        }
                                     />
                                 }
                                 ErrorBoundary={LexicalErrorBoundary}
@@ -58,7 +66,9 @@ export function Editor() {
                         {/* <AutoFocusPlugin /> */}
                         <AutoLinkPlugin matchers={MATCHERS} />
                         <TabIndentationPlugin />
-                        <MarkdownShortcutPlugin transformers={MD_TRANSFORMERS} />
+                        <MarkdownShortcutPlugin
+                            transformers={MD_TRANSFORMERS}
+                        />
                         <ListBreakOutPlugin />
                         <LinkPlugin />
                         <ListPlugin />

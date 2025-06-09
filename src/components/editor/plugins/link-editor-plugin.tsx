@@ -1,8 +1,18 @@
-import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_NORMAL, $createTextNode } from 'lexical'
+import {
+    $getSelection,
+    $isRangeSelection,
+    COMMAND_PRIORITY_NORMAL,
+    $createTextNode,
+} from 'lexical';
 import { createCommand } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useCallback, useEffect, useState } from 'react';
-import { $createLinkNode, $isLinkNode, LinkNode, $toggleLink } from '@lexical/link';
+import {
+    $createLinkNode,
+    $isLinkNode,
+    LinkNode,
+    $toggleLink,
+} from '@lexical/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,14 +21,16 @@ import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/popover';
 
 export function LinkEditorPlugin() {
     const [editor] = useLexicalComposerContext();
     const [linkUrl, setLinkUrl] = useState('');
     const [isEditing, setIsEditing] = useState(false);
 
-    const INSERT_LINK_COMMAND = createCommand<{ url: string }>('INSERT_LINK_COMMAND');
+    const INSERT_LINK_COMMAND = createCommand<{ url: string }>(
+        'INSERT_LINK_COMMAND'
+    );
 
     const handleLinkButtonClick = useCallback(() => {
         editor.getEditorState().read(() => {
@@ -30,7 +42,9 @@ export function LinkEditorPlugin() {
             }
 
             const nodes = selection.getNodes();
-            let linkNode = nodes.find((node): node is LinkNode => $isLinkNode(node));
+            let linkNode = nodes.find((node): node is LinkNode =>
+                $isLinkNode(node)
+            );
             if (!linkNode) {
                 const nodeWithLinkParent = nodes.find(node => {
                     const parent = node.getParent();
@@ -43,7 +57,7 @@ export function LinkEditorPlugin() {
                     }
                 }
             }
-            
+
             if (linkNode) {
                 setLinkUrl(linkNode.getURL());
             } else {
@@ -64,32 +78,42 @@ export function LinkEditorPlugin() {
     useEffect(() => {
         if (!editor) return;
 
-        const unregisterCommand = editor.registerCommand(INSERT_LINK_COMMAND, (payload) => {
-            editor.update(() => {
-                const selection = $getSelection();
-                if ($isRangeSelection(selection)) {
-                    const text = selection.getTextContent();
-                    const linkNode = $createLinkNode(payload.url);
-                    const textNode = $createTextNode(text);
-                    linkNode.append(textNode);
-                    selection.insertNodes([linkNode]);
-                }
-            });
-            return true;
-        }, COMMAND_PRIORITY_NORMAL);
+        const unregisterCommand = editor.registerCommand(
+            INSERT_LINK_COMMAND,
+            payload => {
+                editor.update(() => {
+                    const selection = $getSelection();
+                    if ($isRangeSelection(selection)) {
+                        const text = selection.getTextContent();
+                        const linkNode = $createLinkNode(payload.url);
+                        const textNode = $createTextNode(text);
+                        linkNode.append(textNode);
+                        selection.insertNodes([linkNode]);
+                    }
+                });
+                return true;
+            },
+            COMMAND_PRIORITY_NORMAL
+        );
 
-        const unregisterNodeTransform = editor.registerNodeTransform(LinkNode, (linkNode: LinkNode) => {
-            const previousSibling = linkNode.getPreviousSibling();
-            if ($isLinkNode(previousSibling) && previousSibling.getURL() === linkNode.getURL()) {
-                previousSibling.append(...linkNode.getChildren());
-                linkNode.remove();
+        const unregisterNodeTransform = editor.registerNodeTransform(
+            LinkNode,
+            (linkNode: LinkNode) => {
+                const previousSibling = linkNode.getPreviousSibling();
+                if (
+                    $isLinkNode(previousSibling) &&
+                    previousSibling.getURL() === linkNode.getURL()
+                ) {
+                    previousSibling.append(...linkNode.getChildren());
+                    linkNode.remove();
+                }
             }
-        });
+        );
 
         return () => {
             unregisterCommand();
             unregisterNodeTransform();
-        }
+        };
     }, [editor]);
 
     return (
@@ -104,15 +128,21 @@ export function LinkEditorPlugin() {
                     <Link className="h-4 w-4" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent align="start" className="w-auto p-2 border border-accent rounded-lg" sideOffset={10}>
+            <PopoverContent
+                align="start"
+                className="w-auto p-2 border border-accent rounded-lg"
+                sideOffset={10}
+            >
                 <div className="flex items-center gap-2">
-                    <Label htmlFor="link-url" className="sr-only">URL</Label>
+                    <Label htmlFor="link-url" className="sr-only">
+                        URL
+                    </Label>
                     <Input
                         id="link-url"
                         value={linkUrl}
-                        onChange={(e) => setLinkUrl(e.target.value)}
+                        onChange={e => setLinkUrl(e.target.value)}
                         placeholder="https://example.com"
-                        onKeyDown={(e) => {
+                        onKeyDown={e => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
                                 handleLinkCreation();
@@ -120,7 +150,13 @@ export function LinkEditorPlugin() {
                         }}
                         className="h-8"
                     />
-                    <Button onClick={handleLinkCreation} size="sm" className="h-8">Save</Button>
+                    <Button
+                        onClick={handleLinkCreation}
+                        size="sm"
+                        className="h-8"
+                    >
+                        Save
+                    </Button>
                 </div>
             </PopoverContent>
         </Popover>

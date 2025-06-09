@@ -11,7 +11,7 @@ export function FontSwitcher() {
     }, [currentFont]);
 
     const toggleFont = () => {
-        setCurrentFont(prev => prev === 'inter' ? 'geist' : 'inter');
+        setCurrentFont(prev => (prev === 'inter' ? 'geist' : 'inter'));
     };
 
     return (
@@ -24,4 +24,4 @@ export function FontSwitcher() {
             {currentFont === 'inter' ? 'Switch to Geist' : 'Switch to Inter'}
         </Button>
     );
-} 
+}

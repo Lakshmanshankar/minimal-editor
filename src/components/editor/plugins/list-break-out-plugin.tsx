@@ -1,5 +1,11 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $createParagraphNode, $getSelection, $isRangeSelection, COMMAND_PRIORITY_LOW, KEY_ENTER_COMMAND } from 'lexical';
+import {
+    $createParagraphNode,
+    $getSelection,
+    $isRangeSelection,
+    COMMAND_PRIORITY_LOW,
+    KEY_ENTER_COMMAND,
+} from 'lexical';
 import { $isListItemNode, $isListNode } from '@lexical/list';
 import { useEffect } from 'react';
 
@@ -20,7 +26,8 @@ export function ListBreakOutPlugin() {
                 if (!$isListItemNode(parentNode)) return false;
 
                 // Check if we're at the end of the list item
-                const isAtEnd = anchor.offset === anchorNode.getTextContentSize();
+                const isAtEnd =
+                    anchor.offset === anchorNode.getTextContentSize();
                 if (!isAtEnd) return false;
 
                 // Check if the list item is empty
@@ -50,4 +57,4 @@ export function ListBreakOutPlugin() {
     }, [editor]);
 
     return null;
-} 
+}

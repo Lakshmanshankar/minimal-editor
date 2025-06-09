@@ -1,4 +1,3 @@
-
 ## 📝 No BS Editor,
 
 A minimalist, local-first, keyboard-friendly notes editor — built for devs who just want to write and move on.
@@ -26,16 +25,12 @@ A minimalist, local-first, keyboard-friendly notes editor — built for devs who
 - [Lexical](https://lexical.dev) – editor framework by Meta
 - [Tailwind CSS](https://tailwindcss.com) – styling
 
-
-
 ## 🛠️ Usage
 
 1. Open the app
 2. Start typing
-4. Editor auto-generates a file, stores it locally, and updates the URL
-5. Visit `/editor?file=12345678` to reopen any file
-
-
+3. Editor auto-generates a file, stores it locally, and updates the URL
+4. Visit `/editor?file=12345678` to reopen any file
 
 ## 🚧 Future Enhancements
 
@@ -43,8 +38,6 @@ A minimalist, local-first, keyboard-friendly notes editor — built for devs who
 - 🔥 Autosave with debounce
 - 🗑️ Delete notes
 - 🔐 Cloud sync (optional, opt-in)
-
-
 
 ## 🧪 Dev Setup
 
