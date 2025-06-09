@@ -1,5 +1,3 @@
-import { defaultColorConfig } from './color-system';
-
 import {
     TextNode,
     type EditorConfig,
@@ -9,102 +7,124 @@ import {
     type Spread,
 } from 'lexical';
 
-export type SerializedHighlightedTextNode = Spread<
+const DEFAULT_HIGHLIGHT_COLOR_ID = 'bg-daffodil';
+
+// Type definition for the serialized version of our node.
+export type SerializedColoredTextNode = Spread<
     {
         highlightColor: string;
+        colorType: 'text' | 'background';
     },
     SerializedTextNode
 >;
 
-export class HighlightedTextNode extends TextNode {
+/**
+ * ColoredTextNode is a custom TextNode that renders with a background color.
+ * It stores a color ID from the application's color theme.
+ */
+export class ColoredTextNode extends TextNode {
     __highlightColor: string;
+    __colorType: 'text' | 'background';
 
     static getType(): string {
-        return 'highlighted-text';
+        return 'colored-text';
     }
 
-    static clone(node: HighlightedTextNode): HighlightedTextNode {
-        return new HighlightedTextNode(
+    static clone(node: ColoredTextNode): ColoredTextNode {
+        return new ColoredTextNode(
             node.getTextContent(),
             node.__highlightColor,
+            node.__colorType,
             node.getKey()
         );
     }
 
-    constructor(text: string, highlightColor = 'yellow', key?: NodeKey) {
+    constructor(text: string, highlightColorId = DEFAULT_HIGHLIGHT_COLOR_ID, colorType: 'text' | 'background', key?: NodeKey) {
         super(text, key);
-        this.__highlightColor = highlightColor;
-        this.setMode('token');
+        this.__highlightColor = highlightColorId;
+        this.__colorType = colorType;
     }
 
     createDOM(config: EditorConfig): HTMLElement {
         const dom = super.createDOM(config);
-        dom.classList.add('highlighted-text-node');
-        dom.style.backgroundColor = this.__highlightColor;
-        dom.dataset.highlightColor = this.__highlightColor;
+        dom.classList.add(this.__highlightColor);
+        dom.dataset.colorId = this.__highlightColor;
+        dom.dataset.colorType = this.__colorType;
         return dom;
     }
 
-    updateDOM(prev: HighlightedTextNode, dom: HTMLElement): boolean {
-        const superUpdated = super.updateDOM(prev, dom);
+    updateDOM(prevNode: ColoredTextNode & this, dom: HTMLElement, config: EditorConfig): boolean {
+        const isUpdated = super.updateDOM(prevNode, dom, config);
 
-        if (prev.__highlightColor !== this.__highlightColor) {
-            dom.style.backgroundColor = this.__highlightColor;
-            dom.dataset.highlightColor = this.__highlightColor;
+        if (prevNode.__highlightColor !== this.__highlightColor) {
+            // Remove old color class
+            dom.classList.remove(prevNode.__highlightColor);
+            dom.classList.add(this.__highlightColor);
+            dom.dataset.colorId = this.__highlightColor;
         }
 
-        // Return true if the DOM was already updated by TextNode's updateDOM
-        return superUpdated;
+        return isUpdated;
     }
 
     static importJSON(
-        node: SerializedHighlightedTextNode
-    ): HighlightedTextNode {
-        const instance = $createHighlightedTextNode(
-            node.text,
-            node.highlightColor
+        serializedNode: SerializedColoredTextNode
+    ): ColoredTextNode {
+        const node = $createColoredTextNode(
+            serializedNode.text,
+            serializedNode.highlightColor,
+            serializedNode.colorType
         );
-        instance.setFormat(node.format);
-        instance.setDetail(node.detail);
-        instance.setMode(node.mode);
-        instance.setStyle(node.style);
-        return instance;
+        // Set standard text node properties.
+        node.setFormat(serializedNode.format);
+        node.setDetail(serializedNode.detail);
+        node.setMode(serializedNode.mode);
+        node.setStyle(serializedNode.style);
+        return node;
     }
 
-    exportJSON(): SerializedHighlightedTextNode {
+    exportJSON(): SerializedColoredTextNode {
         return {
             ...super.exportJSON(),
-            highlightColor: this.__highlightColor,
-            type: 'highlighted-text',
+            highlightColor: this.getHighlightColor(),
+            colorType: this.__colorType,
             version: 1,
         };
     }
 
-    setHighlightColor(color: string): this {
+    // --- Custom methods for our node ---
+    setHighlightColor(colorId: string): this {
         const writable = this.getWritable();
-        writable.__highlightColor = color;
+        writable.__highlightColor = colorId;
         return writable;
     }
 
+    /**
+     * Gets the highlight color ID currently assigned to the node.
+     * @returns The color ID string.
+     */
     getHighlightColor(): string {
-        return this.__highlightColor;
-    }
-
-    // Add this method to properly handle text content updates
-    updateText(text: string): this {
-        return super.updateText(text);
+        return this.getLatest().__highlightColor;
     }
 }
 
-export function $createHighlightedTextNode(
+/**
+ * Factory function to create a new ColoredTextNode.
+ * @param text - The text content of the node.
+ * @param highlightColorId - The thematic ID for the background color.
+ */
+export function $createColoredTextNode(
     text: string,
-    highlightColor = 'yellow'
-): HighlightedTextNode {
-    return new HighlightedTextNode(text, highlightColor);
+    highlightColorId = DEFAULT_HIGHLIGHT_COLOR_ID,
+    colorType: 'text' | 'background'
+): ColoredTextNode {
+    return new ColoredTextNode(text, highlightColorId, colorType);
 }
 
-export function $isHighlightedTextNode(
+/**
+ * Type guard to check if a LexicalNode is a ColoredTextNode.
+ */
+export function $isColoredTextNode(
     node: LexicalNode | null | undefined
-): node is HighlightedTextNode {
-    return node instanceof HighlightedTextNode;
+): node is ColoredTextNode {
+    return node instanceof ColoredTextNode;
 }
